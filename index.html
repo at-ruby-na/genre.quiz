@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuis GenRe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffc1cc;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #1c1c1c;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .answer {
+      margin-bottom: 8px;
+    }
+    .btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #1c1c1c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #004d40;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Kuis GenRe</h2>
+    <div id="quiz">
+      <p class="question" id="question"></p>
+      <div id="answers"></div>
+      <button class="btn" onclick="submitAnswer()">Kirim Jawaban</button>
+      <p id="result"></p>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Apa kepanjangan dari GenRe?",
+        options: [
+          "Generasi Remaja",
+          "Generasi Regenerasi",
+          "Generasi Berencana",
+          "Gerakan Remaja Nasional"
+        ],
+        answer: "Generasi Berencana"
+      },
+      {
+        question: "Salah satu tujuan program GenRe adalah...",
+        options: [
+          "Menunda usia pernikahan",
+          "Mempercepat pernikahan remaja",
+          "Menghindari pendidikan tinggi",
+          "Meningkatkan jumlah penduduk"
+        ],
+        answer: "Menunda usia pernikahan"
+      },
+      {
+        question: "Apa itu Triad KRR dalam GenRe?",
+        options: [
+          "Tiga warna bendera",
+          "Tiga risiko kesehatan reproduksi remaja",
+          "Tiga program wajib belajar",
+          "Tiga jenjang pendidikan"
+        ],
+        answer: "Tiga risiko kesehatan reproduksi remaja"
+      },
+      {
+        question: "Berikut yang bukan bagian dari Triad KRR adalah...",
+        options: [
+          "Pernikahan dini",
+          "Seks pranikah",
+          "Narkotika",
+          "Pendidikan tinggi"
+        ],
+        answer: "Pendidikan tinggi"
+      },
+      {
+        question: "Siapa yang berperan sebagai konselor sebaya dalam GenRe?",
+        options: [
+          "Guru BK",
+          "Duta GenRe",
+          "Orangtua",
+          "Dokter"
+        ],
+        answer: "Duta GenRe"
+      },
+      {
+        question: "Singkatan dari Human Immunodefiency Virus adalah?",
+        options: [
+          "AIDS",
+          "HIV",
+          "HIV/AIDS",
+          "semua benar"
+        ],
+        answer: "HIV"
+      },
+      {
+        question: "Yang bukan 8 fungsi keluarga dibawah ini yaitu?",
+        options: [
+          "Agama",
+          "Reproduksi",
+          "Perlindungan",
+          "Politik"
+        ],
+        answer: "Politik"
+      },
+      {
+        question: "Yang bukan Tribina dibawah ini yaitu?",
+        options: [
+          "Bina Keluarga Balita (BKB)",
+          "Bina Keluarga Remaja (BKR)",
+          "Bina Keluarga Dewasa (BKD)",
+          "Bina Keluarga Lansia (BKL)"
+        ],
+        answer: "Bina Keluarga Dewasa (BKD)"
+      },
+      {
+        question: "Yang bukan ciri ciri remaja adalah?",
+        options: [
+          "umur 10-24 belum menikah",
+          "Labil",
+          "Egosentris (mementingkan diri sendiri)",
+          "Sudah mempunyai anak"
+        ],
+        answer: "Sudah mempunyai anak"
+      },
+      {
+        question: "Pusat Informasi Konseling Remaja memiliki singkatan , yaitu?",
+        options: [
+          "Pik R",
+          "Pik Remaja",
+          "Pik R/M",
+          "Pik M"
+        ],
+        answer: "Pik R"
+      },
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('question').textContent = q.question;
+
+      const answersDiv = document.getElementById('answers');
+      answersDiv.innerHTML = '';
+      q.options.forEach(opt => {
+        const label = document.createElement('label');
+        label.classList.add('answer');
+        label.innerHTML = `<input type="radio" name="answer" value="${opt}"> ${opt}`;
+        answersDiv.appendChild(label);
+        answersDiv.appendChild(document.createElement('br'));
+      });
+
+      document.getElementById('result').textContent = '';
+    }
+
+    function submitAnswer() {
+      const selected = document.querySelector('input[name="answer"]:checked');
+      if (!selected) {
+        alert("Pilih salah satu jawaban dulu!");
+        return;
+      }
+
+      if (selected.value === questions[currentQuestion].answer) {
+        score++;
+      }
+
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById('quiz').innerHTML =
+          `<h3>Kuis Selesai!</h3><p>Skor akhir kamu: ${score}/${questions.length}</p>`;
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
